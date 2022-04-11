@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+int n;
+int cnt;
+vector<int> v;
+int arr[4];
+int used[4];
+int maxV = 0;
+int minV = 1000000000;
+
+
+int getCal(int sum, int value, int index) {
+	used[index]++;
+	if (index == 0) {
+		return sum + value;
+	}
+	if (index == 1) {
+		return sum - value;
+	}
+	if (index == 2) {
+		return sum * value;
+	}
+	if (index == 3) {
+		return sum / value;
+	}
+}
+void run(int lev , int sum) {
+	if (lev == n-1) {
+		if (sum > maxV) {
+			maxV = sum;
+		}
+		if (sum < minV) {
+			minV = sum;
+		}
+		return;
+	}
+
+	for (int i = 0; i < 4; i++) {
+		if (arr[i] == used[i]) continue;
+		int ret = getCal(sum, v[lev + 1], i);
+		run(lev + 1, ret);
+		used[i]--;
+	}
+}
+
+int main()
+{
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		int input;
+		cin >> input;
+		v.push_back(input);
+	}
+	for (int i = 0; i < 4; i++) {
+		cin >> arr[i];
+	}
+
+	run(0, v[0]);
+
+	cout << maxV << '\n' << minV;
+}
