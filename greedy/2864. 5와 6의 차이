@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int up6(string n) {
+	for (int i = 0; i < n.length(); i++) {
+		if (n[i] == '5') n[i]++;
+	}
+	int ret = stoi(n);
+	return ret;
+}
+
+int down5(string n) {
+	for (int i = 0; i < n.length(); i++) {
+		if (n[i] == '6') n[i]--;
+	}
+	int ret = stoi(n);
+	return ret;
+}
+
+int main1() {
+	string a, b;
+	cin >> a >> b;
+	int maxV = up6(a) + up6(b);
+	int minV = down5(a) + down5(b);
+	cout << minV << ' ' << maxV;
+
+
+	return 0;
+}
