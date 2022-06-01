@@ -1,0 +1,35 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+int dp[10001];
+int main() {
+    int num;
+    cin >> num;
+    int scoreArr[10001] = { 0 };
+    for (int i = 1; i <= num; i++) {
+        int input;
+        cin >> input;
+        scoreArr[i] = input;
+    }
+    dp[0] = 0;
+    dp[1] = scoreArr[1];
+    dp[2] = scoreArr[1]+scoreArr[2];
+    dp[3] = max(dp[1] + scoreArr[3], scoreArr[2] + scoreArr[3]);
+   
+    for (int i = 3; i <= num; i++) {
+        dp[i] = max(dp[i - 2] + scoreArr[i], dp[i - 3] + scoreArr[i] + scoreArr[i - 1]);
+        dp[i] = max(dp[i - 1], dp[i]);
+    }
+    int max = 0;
+    for (int i = 1; i <= num; i++) {
+        if (max < dp[i]) {
+            max = dp[i];
+        }
+    }
+    cout << max;
+
+
+    return 0;
+}
